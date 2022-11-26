@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>Search results for "{{searchstr}}"</h2>
+  <div class="row row-cols-1 row-cols-md-5 g-4">
+    <div *ngFor="let movie of movies">
+      <div class="card h-70 eachMovieCard">
+        <div class="card-header  overflow-auto eachMovie">
+          {{movie.title}}
+        </div>
+        <img src="{{movie.poster_path}}" class="card-img eachMovie">
+        <div class="card-body eachMovie">
+          <p-scrollPanel [style]="{width: '100%', height: '60px'}" styleClass="custombar" class="overview">
+            <p>{{movie.overview}}</p>
+          </p-scrollPanel>
+        </div>
+        <div class="card-footer h-3rem eachMovie">
+          <div class="buttons" >
+                <span class="rating eachMovie">
+                  <i class="pi pi-star"></i>
+                  {{movie.vote_average.toFixed(1)}}
+                </span>
+            <p-button icon="pi pi-plus-circle" styleClass="p-button-rounded p-button-text p-button-sm" title="Add to Watchlist"
+                      (click)="addToWatchlist(movie)"></p-button>
+            <p-button icon="pi pi-info-circle" styleClass="p-button-rounded p-button-text p-button-sm"
+                      (click)="readMore(movie.movieid)" ></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-toast></p-toast>
+</div>

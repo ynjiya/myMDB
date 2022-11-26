@@ -1,0 +1,23 @@
+.container {
+  /*font-size: medium;*/
+  line-height: 100%;
+}
+
+.card-img {
+  aspect-ratio: 2/3;
+}
+
+.rating {
+  vertical-align: 0.5em;
+}
+
+button {
+  width: 20%;
+  margin-top: 10px;
+  color: white;
+}
+
+#moreid {
+  text-align: center;
+  padding-bottom: 100px;
+}

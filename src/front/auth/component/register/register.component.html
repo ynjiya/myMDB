@@ -1,0 +1,54 @@
+<p-toast></p-toast>
+
+<div class="text-center auth">
+  <div class="form-signin">
+    <h2>Register</h2>
+    <input type="text"
+           class="form-control"
+           placeholder="Username"
+           required autofocus
+           #username="ngModel"
+           [class.is-invalid]="username.invalid && username.touched"
+           [(ngModel)]="data.username">
+
+    <input type="text"
+           class="form-control"
+           placeholder="Firstname"
+           pKeyFilter="alpha"
+           required
+           #firstname="ngModel"
+           [class.is-invalid]="firstname.invalid && firstname.touched"
+           [(ngModel)]="data.firstname">
+
+    <input type="text"
+           class="form-control"
+           placeholder="Lastname"
+           pKeyFilter="alpha"
+           required
+           #lastname="ngModel"
+           [class.is-invalid]="lastname.invalid && lastname.touched"
+           [(ngModel)]="data.lastname">
+
+    <input type="email"
+           class="form-control"
+           placeholder="Email"
+           #email="ngModel"
+           [class.is-invalid]="email.invalid && email.touched"
+           [(ngModel)]="data.email"
+           required>
+
+    <input type="password"
+           class="form-control"
+           placeholder="Password"
+           required
+           #password="ngModel"
+           [class.is-invalid]="password.invalid && password.touched"
+           [(ngModel)]="data.password">
+    <button
+      class="btn btn-lg btn-primary btn-block"
+      (click)="register()">
+      Register
+    </button>
+  </div>
+  <p-toast></p-toast>
+</div>

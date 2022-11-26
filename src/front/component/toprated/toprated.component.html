@@ -1,0 +1,59 @@
+<div class="container">
+  <h2>Top rated movies</h2>
+  <div class="row row-cols-1 row-cols-md-5 g-4">
+    <div *ngFor="let movie of movies">
+      <div class="card h-70 eachMovieCard">
+        <div class="card-header  overflow-auto eachMovie">
+          {{movie.title}}
+        </div>
+        <img src="{{movie.poster_path}}" class="card-img eachMovie">
+        <div class="card-body eachMovie">
+          <p-scrollPanel [style]="{width: '100%', height: '60px'}" styleClass="custombar" class="overview">
+            <p>{{movie.overview}}</p>
+          </p-scrollPanel>
+        </div>
+        <div class="card-footer h-3rem eachMovie">
+          <div class="buttons" >
+                <span class="rating eachMovie">
+                  <i class="pi pi-star"></i>
+                  {{movie.vote_average.toFixed(1)}}
+                </span>
+            <p-button icon="pi pi-plus-circle" styleClass="p-button-rounded p-button-text p-button-sm" title="Add to Watchlist"
+                      (click)="addToWatchlist(movie)"></p-button>
+            <p-button icon="pi pi-info-circle" styleClass="p-button-rounded p-button-text p-button-sm"
+                      (click)="readMore(movie.movieid)" ></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="toprated/{{page - 1}}/{{genre.toString()+'/'+orderby+'/'+sort}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="toprated/1/{{genre.toString()+'/'+orderby+'/'+sort}}">1</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/2/{{genre.toString()+'/'+orderby+'/'+sort}}">2</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/3/{{genre.toString()+'/'+orderby+'/'+sort}}">3</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/4/{{genre.toString()+'/'+orderby+'/'+sort}}">4</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/5/{{genre.toString()+'/'+orderby+'/'+sort}}">5</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/6/{{genre.toString()+'/'+orderby+'/'+sort}}">6</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/7/{{genre.toString()+'/'+orderby+'/'+sort}}">7</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/8/{{genre.toString()+'/'+orderby+'/'+sort}}">8</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/9/{{genre.toString()+'/'+orderby+'/'+sort}}">9</a></li>
+      <li class="page-item"><a class="page-link" href="toprated/10/{{genre.toString()+'/'+orderby+'/'+sort}}">10</a></li>
+
+      <li class="page-item">
+        <a class="page-link" href="toprated/{{page - -1}}/{{genre.toString()+'/'+orderby+'/'+sort}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <p-toast></p-toast>
+</div>

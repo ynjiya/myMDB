@@ -1,0 +1,109 @@
+<div class="container-movies">
+  <div class="popular">
+    <h2>Popular movies
+      <button pButton pRipple type="button" icon="pi pi-angle-right" (click)="toPopular()" class="p-button-rounded p-button-text p-button-plain"></button>
+    </h2>
+    <p-carousel [value]="popular" [numVisible]="5" [numScroll]="5" [responsiveOptions]="responsiveOptions">
+      <ng-template let-movie pTemplate="item">
+        <div class="card h-70 eachMovieCard">
+          <div class="card-header  overflow-auto eachMovie">
+            {{movie.title}}
+          </div>
+          <img src="{{movie.poster_path}}" class="card-img eachMovie">
+          <div class="card-body eachMovie">
+            <p-scrollPanel [style]="{width: '100%', height: '60px'}" styleClass="custombar" class="overview">
+              <p>{{movie.overview}}</p>
+            </p-scrollPanel>
+          </div>
+          <div class="card-footer h-3rem eachMovie">
+            <div class="buttons" >
+                <span class="rating eachMovie">
+                  <i class="pi pi-star"></i>
+                  {{movie.vote_average.toFixed(1)}}
+                </span>
+              <p-button icon="pi pi-plus-circle" styleClass="p-button-rounded p-button-text p-button-sm" title="Add to Watchlist"
+                        (click)="addToWatchlist(movie)"></p-button>
+              <p-button icon="pi pi-info-circle" styleClass="p-button-rounded p-button-text p-button-sm"
+                        (click)="readMore(movie.movieid)" ></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+
+  </div>
+
+
+
+  <div class="upcoming">
+    <h2>Upcoming movies
+      <button pButton pRipple type="button" icon="pi pi-angle-right" (click)="toUpcoming()" class="p-button-rounded p-button-text p-button-plain"></button>
+    </h2>
+    <p-carousel [value]="upcoming" [numVisible]="5" [numScroll]="5" [responsiveOptions]="responsiveOptions">
+      <ng-template let-movie pTemplate="item">
+        <div class="card h-70 eachMovieCard">
+          <div class="card-header  overflow-auto eachMovie">
+            {{movie.title}}
+          </div>
+          <img src="{{movie.poster_path}}" class="card-img eachMovie">
+          <div class="card-body eachMovie">
+            <p-scrollPanel [style]="{width: '100%', height: '60px'}" styleClass="custombar" class="overview">
+              <p>{{movie.overview}}</p>
+            </p-scrollPanel>
+          </div>
+          <div class="card-footer h-3rem eachMovie">
+            <div class="buttons" >
+                <span class="rating eachMovie">
+                  <i class="pi pi-star"></i>
+                  {{movie.vote_average.toFixed(1)}}
+                </span>
+              <p-button icon="pi pi-plus-circle" styleClass="p-button-rounded p-button-text p-button-sm" title="Add to Watchlist"
+                        (click)="addToWatchlist(movie)"></p-button>
+              <p-button icon="pi pi-info-circle" styleClass="p-button-rounded p-button-text p-button-sm"
+                        (click)="readMore(movie.movieid)" ></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+
+  </div>
+
+
+  <div class="toprated">
+    <h2>Top Rated movies
+      <button pButton pRipple type="button" icon="pi pi-angle-right" (click)="toToprated()" class="p-button-rounded p-button-text p-button-plain"></button>
+    </h2>
+    <p-carousel [value]="toprated" [numVisible]="5" [numScroll]="5" [responsiveOptions]="responsiveOptions">
+      <ng-template let-movie pTemplate="item">
+        <div class="card h-70 eachMovieCard">
+          <div class="card-header  overflow-auto eachMovie">
+            {{movie.title}}
+          </div>
+          <img src="{{movie.poster_path}}" class="card-img eachMovie">
+          <div class="card-body eachMovie">
+            <p-scrollPanel [style]="{width: '100%', height: '60px'}" styleClass="custombar" class="overview">
+              <p>{{movie.overview}}</p>
+            </p-scrollPanel>
+          </div>
+          <div class="card-footer h-3rem eachMovie">
+            <div class="buttons" >
+                <span class="rating eachMovie">
+                  <i class="pi pi-star"></i>
+                  {{movie.vote_average.toFixed(1)}}
+                </span>
+              <p-button icon="pi pi-plus-circle" styleClass="p-button-rounded p-button-text p-button-sm" title="Add to Watchlist"
+                        (click)="addToWatchlist(movie)"></p-button>
+              <p-button icon="pi pi-info-circle" styleClass="p-button-rounded p-button-text p-button-sm"
+                        (click)="readMore(movie.movieid)" ></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+  <p-toast></p-toast>
+
+</div>
+
+

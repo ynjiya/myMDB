@@ -1,0 +1,13 @@
+.container {
+  /*font-size: medium;*/
+  line-height: 100%;
+}
+
+.card-img {
+  aspect-ratio: 2/3;
+}
+
+.rating {
+  vertical-align: 0.5em;
+}
+

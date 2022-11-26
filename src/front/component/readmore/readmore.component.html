@@ -1,0 +1,218 @@
+<div class="container" style="width: 70%">
+  <div class="p-grid" style="display: flex; flex-direction: row;">
+    <div class="p-col" style="width: 50%">
+      <img src="{{data?.poster_path}}" style="width: 100%">
+    </div>
+    <div class="p-col">
+      <div class="short-info">
+        <h2>{{data?.title.toUpperCase()}}</h2>
+        <p>{{data?.release_date.toString().slice(0, 10)}}
+
+          &bull; {{this.runtime}}
+
+          &bull; <i class="pi pi-star"></i>   {{data?.vote_average}}
+        </p>
+
+        <h4>CAST</h4>
+        <p-divider></p-divider>
+        <span *ngFor="let actor of cast; let i = index" class="actor">
+          <span *ngIf="i < 5">
+            {{actor.name}} &bull;
+          </span>
+        </span>
+
+        <h4>DIRECTOR</h4>
+        <p-divider></p-divider>
+        <span>{{director.directorname}} </span>
+
+        <div style="margin-top: 20px">
+        <p-button label="Add to Watchlist" icon="pi pi-plus-circle" (click)="addToWatchlist(data)"  styleClass="ui-button-success" ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="moreInfo">
+    <br>
+    <h4>STORYLINE</h4>
+    <p-divider></p-divider>
+    <p>{{data?.overview}}</p>
+
+    <h4>VIDEOS</h4>
+    <p-divider></p-divider>
+
+    <div class="videos">
+      <p-carousel [value]="videos" [numVisible]="2" [numScroll]="2" [responsiveOptions]="responsiveOptions" style="width:100%">
+        <ng-template let-video pTemplate="item">
+          <iframe width="100%" [src]="video.videoUrl" class="video">
+            title="{{video.name}}" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen">
+          </iframe>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+
+    <div class="similar">
+      <h4>MORE LIKE THIS</h4>
+      <p-divider></p-divider>
+
+      <p-carousel [value]="similars" [numVisible]="4" [numScroll]="4" [responsiveOptions]="responsiveOptions">
+        <ng-template let-movie pTemplate="item">
+          <div class="card h-70 eachMovieCard">
+            <div class="card-header overflow-auto eachMovie">
+              {{movie.title}}
+            </div>
+            <div class="eachMovie imgdiv">
+              <img src="{{movie.poster_path}}" class="card-img eachMovie">
+            </div>
+            <div class="card-body eachMovie">
+              <p-scrollPanel [style]="{width: '100%', height: '60px'}" class="overview">
+                <p>{{movie.overview}}</p>
+              </p-scrollPanel>
+            </div>
+            <div class="card-footer h-3rem eachMovie">
+              <div class="buttons" >
+                <span class="rating eachMovie">
+                  <i class="pi pi-star"></i>
+                  {{movie.vote_average.toFixed(1)}}
+                </span>
+                <p-button icon="pi pi-plus-circle" styleClass="p-button-rounded p-button-text p-button-sm" title="Add to Watchlist"
+                          (click)="addToWatchlist(movie)"></p-button>
+                <p-button icon="pi pi-info-circle" styleClass="p-button-rounded p-button-text p-button-sm"
+                          (click)="readMore(movie.id)" ></p-button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <div class="saveReview">
+      <h4>RATE AND REVIEW</h4>
+      <p-divider></p-divider>
+
+      <p-rating [cancel]="false" [stars]="10" [(ngModel)]="rating"></p-rating>
+      <br>
+
+      <mat-card class="review-box">
+        <mat-form-field appearance="fill" style="width: 90%">
+          <mat-label>Add review ...</mat-label>
+          <textarea matInput [(ngModel)]="review.content" rows="3" cols="30" placeholder="Write your review" required>
+                    </textarea>
+        </mat-form-field>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions>
+          <button mat-button (click)="addReview(null); clearFields();">Submit</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <h4>OTHERS REVIEWS</h4>
+    <p-divider></p-divider>
+
+    <div class="rc">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="rc-tree">
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+          <mat-card>
+            <mat-card-title>
+              <i class="pi pi-user"></i> {{node.username}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              <div *ngIf="node.rating !== null && node.rating !== 0; else notNull">
+                <i class="pi pi-star"></i> {{node.rating}}/10 &nbsp; &nbsp; {{node.date_added}}
+              </div>
+              <ng-template #notNull>
+                {{node.date_added}}
+              </ng-template>
+
+            </mat-card-subtitle>
+            <div class="rc-content">
+              {{node.content}}
+            </div>
+            <mat-divider inset></mat-divider>
+            <mat-card-actions>
+              <button mat-button (click)="replyOnClick(node); clearFields();"> <span class="material-symbols-outlined">
+chat_bubble
+</span> Reply</button>
+
+              <div *ngIf="node.replyIsClicked" class="comment-input">
+                <mat-card class="reply-box">
+                  <mat-form-field appearance="fill" style="width: 90%">
+                    <mat-label>Reply...</mat-label>
+                    <textarea matInput [(ngModel)]="review.content" rows="3" cols="40" placeholder="Write your review" required>
+                    </textarea>
+                  </mat-form-field>
+                  <mat-divider inset></mat-divider>
+                  <mat-card-actions>
+                    <button mat-button (click)="addReview(node.reviewid); clearFields(); node.replyIsClicked = false">Submit</button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </mat-tree-node>
+
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+          <div class="mat-tree-node">
+            <mat-card>
+              <mat-card-title>
+                <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'Toggle ' + node.reviewid">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                <i class="pi pi-user"></i>
+                {{node.username}}
+
+              </mat-card-title>
+              <mat-card-subtitle>
+                <div *ngIf="node.rating !== null && node.rating !== 0; else notNull">
+                  <i class="pi pi-star"></i> {{node.rating}}/10 &nbsp; &nbsp; {{node.date_added}}
+                </div>
+                <ng-template #notNull>
+                  {{node.date_added}}
+                </ng-template>
+              </mat-card-subtitle>
+              <div class="rc-content">
+                {{node.content}}
+              </div>
+              <mat-divider inset></mat-divider>
+              <mat-card-actions>
+                <button mat-button (click)="replyOnClick(node); clearFields();"> <span class="material-symbols-outlined">
+chat_bubble
+</span> Reply</button>
+
+                <div *ngIf="node.replyIsClicked" class="comment-input">
+                  <mat-card class="reply-box">
+                    <mat-form-field appearance="fill" style="width: 90%">
+                      <mat-label>Reply...</mat-label>
+                      <textarea matInput [(ngModel)]="review.content" rows="3" cols="40" placeholder="Write your review" required>
+                    </textarea>
+                    </mat-form-field>
+                    <mat-divider inset></mat-divider>
+                    <mat-card-actions>
+                      <button mat-button (click)="addReview(node.reviewid); clearFields();">Submit</button>
+                    </mat-card-actions>
+                  </mat-card>
+                </div>
+              </mat-card-actions>
+            </mat-card>
+
+
+          </div>
+          <!-- There is inline padding applied to this div using styles.
+              This padding value depends on the mat-icon-button width.  -->
+          <div [class.rc-tree-invisible]="!treeControl.isExpanded(node)"
+               role="group">
+            <ng-container matTreeNodeOutlet></ng-container>
+          </div>
+        </mat-nested-tree-node>
+      </mat-tree>
+    </div>
+  <p-toast></p-toast>
+  </div>
+</div>
